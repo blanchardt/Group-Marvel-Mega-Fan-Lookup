@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome script tags -->
+    <script src="https://kit.fontawesome.com/2b5ead1563.js" crossorigin="anonymous"></script>
+    <!-- Blaze UI script tags -->
+    <link rel="stylesheet" href="https://unpkg.com/@blaze/css@x.x.x/dist/blaze/blaze.css">
+    <script type="module" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.js"></script>
+    <title> Marvel Mega Fan Lookup </title>
+  </head>
+
+  <body>
+    <!-- Page header -->
+    <div class="pageHeader">
+        <h1 id="pageTitle"> Marvel Mega Fan Lookup </h1>
+        <h2 id="subHeader"> Look up your favorite comic book heroes and villains </h2>
+    </div>
+
+    <!-- Search field -->
+    <div class="searchField">
+        <input type="text">
+        <button class="btn btn-primary" type="button" id="searchCharacter"><i class="fa fa-search"></i></button>
+    </div>
+
+    <!-- Return searched content from Marvel API -->
+    <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+    <div class="cardBody">
+          <h5 class="card-title">Character name </h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+    </div>
+
+    <!-- Return searched content from Wiki API -->
+    <blaze-accordion>
+        <blaze-accordion-pane open header="Click me">
+          This is an expanded accordion
+    </blaze-accordion-pane>
+
+    <script src="assets/js/script.js"></script>
+  </body>
