@@ -42,6 +42,14 @@ fetch(requestUrl)
     var description = dataResult.description;
 
     //update the index.html file using jquerry to add the picture, description, and image appropriatly.
-    
+    var topImage = $(".card-img-top");
+
+    topImage.attr("src", imageUrl);
+
+    var characterTitleEl = $(".card-title");
+    characterTitleEl.text(name);
+
+    var characterCardText = $(".card-text");
+    characterCardText.text(description);
 
   });

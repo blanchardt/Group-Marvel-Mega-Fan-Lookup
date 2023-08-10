@@ -11,6 +11,13 @@
     <script type="module" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.js"></script>
     <title> Marvel Mega Fan Lookup </title>
+
+    <!--needed for dayjs-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -41,5 +48,12 @@
           This is an expanded accordion
     </blaze-accordion-pane>
 
+    <!--needed for jquery-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!--The 2 lines below are required for the crypto md5 function to be used.-->
+    <!--Got this info from https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript
+        and will be cited in the README file as well.-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
     <script src="assets/js/script.js"></script>
   </body>
