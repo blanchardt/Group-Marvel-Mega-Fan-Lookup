@@ -1,0 +1,79 @@
+.pageHeader{
+    background-image: url("/assets/marvelComic1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    padding: 80px;
+    color: white;
+}
+
+#pageTitle {
+    font-weight: bolder;
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 200%;
+    display: flex;
+    justify-content: left;
+    background-color: rgb(199, 0, 0);
+    padding: 10px;
+    width: fit-content;
+    margin: 0px;
+}
+
+#subHeader {
+    font-weight: bolder;
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 75%;
+    display: flex;
+    justify-content: left;
+    background-color: rgb(199, 0, 0);
+    padding: 10px;
+    width: fit-content;
+    margin: 0px;
+}
+
+.searchField {
+    display: flex;
+    padding-top: 50px;
+    padding-bottom:  20px;
+    padding-left: 80px;
+    font-family: Verdana, Tahoma, sans-serif;
+    width: 20%;
+}
+
+ input {
+    font-family: Verdana, Tahoma, sans-serif;
+    box-shadow: 2px 2px #888888;
+ }   
+
+ button {
+    width: 15%;
+    border-radius: 10px;
+    height: 40px;
+    font-family: Verdana, Tahoma, sans-serif;
+    box-shadow: 2px 2px #888888;
+
+ }
+
+ #clearHistory{
+    font-family: Verdana, Tahoma, sans-serif;
+    margin-left: 80px;
+    text-align: center;
+ }
+
+ button:hover {
+    background-color: rgba(134, 132, 132, 0.552);
+}
+
+.cardBody {
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+#card-title {
+    font-size: larger;
+}
+
+section{
+    font-family: Verdana, Tahoma, sans-serif;
+    
+}
+
