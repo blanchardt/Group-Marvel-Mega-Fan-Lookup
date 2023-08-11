@@ -6,6 +6,27 @@ $(function() {
   //get the current unix code for the time stamp.
   var ts = dayjs().unix();
 
+  var searchTerm = document.getElementById("searchTerm");
+  var urlWikiSave = JSON.parse(localStorage.getItem("userentry"));
+  var requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + urlWikiSave.marvel + "&origin=*&format=json&prop=info&inprop=url";
+  var searchButton = document.getElementById("searchCharacter");
+
+
+  fetch(requestUrl)
+  .then(function (response) {
+      return response.json();
+  })
+    .then(function (data) {
+      console.log(data);
+    });
+
+  //declare the url, public and private key in variables.
+  var url = 'https://gateway.marvel.com:443/v1/public/characters?name=';
+  var publicKey = "e2e4e185f80f3a71cdcff67fb6afc597";
+  var privateKey = "504281b22311ba46a13b1314cb218178efc48b84";
+  //get the current unix code for the time stamp.
+  var ts = dayjs().unix();
+
   //store specific elements from the html to the variables.
   var searchBar = $("#searchTerm");
   var searchButtonEl = $("#searchCharacter");
@@ -61,6 +82,8 @@ $(function() {
     characterCardText.text(description);
   }
 
+
+
   //get search text then call the functions to handle the marvel and wikipedia apis.
   function getSearchText(event) {
     event.preventDefault();
@@ -100,6 +123,12 @@ $(function() {
 
       //create a function that deals with wikipedia api.
 
+
+      var searchT = {
+        marvel: searchTerm.value.trim()
+      }
+      localStorage.setItem("userentry", JSON.stringify(searchT));
+      console.log(urlWikiSave.marvel);
     });
 
   }
