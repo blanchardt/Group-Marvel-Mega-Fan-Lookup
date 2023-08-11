@@ -51,7 +51,10 @@
     height: 40px;
     font-family: Verdana, Tahoma, sans-serif;
     box-shadow: 2px 2px #888888;
+ }
 
+ #starBtn:hover {
+    background-color: rgba(255, 230, 0, 0.859);
  }
 
  #clearHistory{
@@ -74,6 +77,9 @@
 
 section{
     font-family: Verdana, Tahoma, sans-serif;
-    
 }
 
+#starBtn {
+    width: 4%;
+    font-size: larger;
+}
