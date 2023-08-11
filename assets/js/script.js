@@ -14,7 +14,7 @@ $(function() {
   //use the MD5 function.  Also credited in the readme file.
   var hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
   //replace Hulk with input value from the search box.  Place this in a function later.
-  var requestUrl;
+  var marvelRequestUrl;
 
 
 
@@ -61,12 +61,20 @@ $(function() {
     characterCardText.text(description);
   }
 
+  //get search text then call the functions to handle the marvel and wikipedia apis.
   function getSearchText(event) {
     event.preventDefault();
+    //get the value of the search bar and check if it is null.
     var searchResult = searchBar.val();
-    requestUrl = url + searchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
-    console.log(requestUrl);
-    fetch(requestUrl)
+    if (!searchResult) {
+      return;
+    
+    }
+    //create the url that the marvel api will use.
+    marvelRequestUrl = url + searchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
+    
+    //fetch the marvel api.
+    fetch(marvelRequestUrl)
       .then(function (response) {
       return response.json();
     })
