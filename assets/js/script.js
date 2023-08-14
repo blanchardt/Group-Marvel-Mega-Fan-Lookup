@@ -41,12 +41,6 @@ fetch(requestUrl)
     }
     
   });
-  .then(function (response) {
-      return response.json();
-  })
-    .then(function (data) {
-      console.log(data);
-    });
 
   
   //declare the url, public and private key in variables.
