@@ -5,60 +5,53 @@ $(function() {
   var privateKey = "504281b22311ba46a13b1314cb218178efc48b84";
   //get the current unix code for the time stamp.
   var ts = dayjs().unix();
-
-var searchTerm = document.getElementById("searchTerm");
-var urlWikiSave = JSON.parse(localStorage.getItem("userentry"));
-var requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + urlWikiSave.marvel + "&origin=*&format=json&prop=info&inprop=url";
-var searchButton = document.getElementById("searchCharacter");
-var faveButton = document.getElementById("favorite");
-
-function searchChar () {
-searchButton.addEventListener("click", function (event) {
-    event.preventDefault();
-        var searchT = {
-             marvel: searchTerm.value.trim()
-        }
-        localStorage.setItem("userentry", JSON.stringify(searchT));
-        console.log(urlWikiSave.marvel);
-})}
-searchChar();
-
-
-fetch(requestUrl)
-.then(function (response) {
-    return response.json();
- })
-  .then(function (data) {
-    console.log(data);
-    var wikiResult = Object.values(data.query.pages)[0];
-    if (wikiResult) {
-        var wikiLink = wikiResult.fullurl;
-        //Error checking, change output if no results found
-        console.log(wikiLink);
-        
-    } else {
-        //text content
-    }
-    
-  });
-
   
-  //declare the url, public and private key in variables.
-  var url = 'https://gateway.marvel.com:443/v1/public/characters?name=';
-  var publicKey = "e2e4e185f80f3a71cdcff67fb6afc597";
-  var privateKey = "504281b22311ba46a13b1314cb218178efc48b84";
-  //get the current unix code for the time stamp.
-  var ts = dayjs().unix();
-
-  //store specific elements from the html to the variables.
-  var searchBar = $("#searchTerm");
-  var searchButtonEl = $("#searchCharacter");
 
   //Went to https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to
   //use the MD5 function.  Also credited in the readme file.
   var hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
-  //replace Hulk with input value from the search box.  Place this in a function later.
   var marvelRequestUrl;
+
+  var searchForm = $("#searchForm");
+
+  var searchTerm = document.getElementById("searchTerm");
+  var favorites = [];
+  var requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + favorites.marvel + "&origin=*&format=json&prop=info&inprop=url";
+  var searchButton = document.getElementById("searchCharacter");
+  var faveButton = document.getElementById("starBtn");
+
+  function searchChar () {
+    searchButton.addEventListener("click", function (event) {
+        event.preventDefault();
+            var searchT = {
+                marvel: searchTerm.value.trim()
+            }
+            localStorage.setItem("userentry", JSON.stringify(searchT));
+            console.log(favorites.marvel);
+    })
+  }
+
+  function getWikiInfo(characterName) {
+    
+  }
+
+  fetch(requestUrl)
+  .then(function (response) {
+      return response.json();
+  })
+    .then(function (data) {
+      console.log(data);
+      var wikiResult = Object.values(data.query.pages)[0];
+      if (wikiResult) {
+          var wikiLink = wikiResult.fullurl;
+          //Error checking, change output if no results found
+          console.log(wikiLink);
+          
+      } else {
+          //text content
+      }
+      
+    });
 
 
 
@@ -111,10 +104,9 @@ fetch(requestUrl)
   function getSearchText(event) {
     event.preventDefault();
     //get the value of the search bar and check if it is null.
-    var searchResult = searchBar.val();
+    var searchResult = searchTerm.value.trim();
     if (!searchResult) {
       return;
-    
     }
     //create the url that the marvel api will use.
     marvelRequestUrl = url + searchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
@@ -145,17 +137,30 @@ fetch(requestUrl)
       }
 
       //create a function that deals with wikipedia api.
-
+      getWikiInfo(searchResult);
 
       var searchT = {
         marvel: searchTerm.value.trim()
       }
+
+      favorites.push(searchT);
       localStorage.setItem("userentry", JSON.stringify(searchT));
-      console.log(urlWikiSave.marvel);
+      console.log(favorites.marvel);
     });
 
+    searchTerm.value = "";
   }
 
-  searchButtonEl.on("click", getSearchText);
+  function initialize() {
+    var localStorageFavorites = JSON.parse(localStorage.getItem("userentry"));
+    if (localStorageFavorites) {
+      favorites = localStorageFavorites;
+    }
+  }
+
+  initialize();
+
+  searchForm.on("submit", getSearchText);
   //create an on click event for the favorite button.
+  faveButton.addEventListener("click", searchChar)
 });
