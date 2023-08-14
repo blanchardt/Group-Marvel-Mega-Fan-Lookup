@@ -8,45 +8,9 @@ $(function() {
 
 var searchTerm = document.getElementById("searchTerm");
 var urlWikiSave = JSON.parse(localStorage.getItem("userentry"));
-var requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + urlWikiSave.marvel + "&origin=*&format=json&prop=info&inprop=url";
+var requestUrl;
 var searchButton = document.getElementById("searchCharacter");
 var faveButton = document.getElementById("favorite");
-
-function searchChar () {
-searchButton.addEventListener("click", function (event) {
-    event.preventDefault();
-        var searchT = {
-             marvel: searchTerm.value.trim()
-        }
-        localStorage.setItem("userentry", JSON.stringify(searchT));
-        console.log(urlWikiSave.marvel);
-})}
-searchChar();
-
-
-fetch(requestUrl)
-.then(function (response) {
-    return response.json();
- })
-  .then(function (data) {
-    console.log(data);
-    var wikiResult = Object.values(data.query.pages)[0];
-    if (wikiResult) {
-        var wikiLink = wikiResult.fullurl;
-        //Error checking, change output if no results found
-        console.log(wikiLink);
-        
-    } else {
-        //text content
-    }
-    
-  });
-  .then(function (response) {
-      return response.json();
-  })
-    .then(function (data) {
-      console.log(data);
-    });
 
   
   //declare the url, public and private key in variables.
@@ -124,7 +88,7 @@ fetch(requestUrl)
     }
     //create the url that the marvel api will use.
     marvelRequestUrl = url + searchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
-    
+    requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + searchResult + "&origin=*&format=json&prop=info&inprop=url"
     //fetch the marvel api.
     fetch(marvelRequestUrl)
       .then(function (response) {
@@ -151,13 +115,29 @@ fetch(requestUrl)
       }
 
       //create a function that deals with wikipedia api.
+    });
 
-
-      var searchT = {
-        marvel: searchTerm.value.trim()
-      }
-      localStorage.setItem("userentry", JSON.stringify(searchT));
-      console.log(urlWikiSave.marvel);
+    fetch(requestUrl)
+.then(function (response) {
+    return response.json();
+ })
+  .then(function (data) {
+    console.log(data);
+    var wikiResult = Object.values(data.query.pages)[0];
+    if (wikiResult) {
+        var wikiLink = wikiResult.fullurl;
+        //Error checking, change output if no results found
+        console.log(wikiLink);
+        
+    } else {
+        //text content
+    } 
+  })
+  .then(function (response) {
+      return response.json();
+  })
+    .then(function (data) {
+      console.log(data);
     });
 
   }
