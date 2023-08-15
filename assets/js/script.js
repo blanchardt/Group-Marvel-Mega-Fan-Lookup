@@ -69,7 +69,6 @@ $(function() {
       favoriteWikiUrls.splice(indexOfCurrentName, 1);
     }
     else {
-      console.log("not active");
       faveButton.addClass("active");
       favoriteNames.push(currentSearchResult);
       favoriteWikiUrls.push(requestUrl);
@@ -97,7 +96,7 @@ $(function() {
       
       var wikiResult = Object.values(data.query.pages)[0];
       //Error checking, change output if no results found
-      if (wikiResult) {
+      if (wikiResult.pageid) {
         //get the full wikipedia url.
         var wikiLink = wikiResult.fullurl;
 
@@ -112,6 +111,7 @@ $(function() {
 
         var wikiLinkList = $("<a>");
         wikiLinkList.attr("href", wikiLink);
+        wikiLinkList.attr("target", "_blank")
         wikiLinkList.text(wikiLink);
 
         //append the elements appropriatly.
@@ -124,7 +124,22 @@ $(function() {
         accordionWiki.append(initialBlazeEl);
         
       } else {
-          //text content
+        //create the html elements for the wiki accordion.
+        var initialBlazeEl = $("<blaze-accordion>");
+
+        var accordionWikiPane = $("<blaze-accordion-pane open>");
+        accordionWikiPane.attr("header", "Wikipedia Links");
+
+        var accordionBlazeEl = $("<blaze-accordion>");
+        accordionBlazeEl.text("No Wikis found.");
+
+        //append the elements appropriatly.
+        accordionWikiPane.append(accordionBlazeEl);
+
+        //append the initial html elements to the html.
+        initialBlazeEl.append(accordionWikiPane);
+
+        accordionWiki.append(initialBlazeEl);
       } 
     });
   }
@@ -226,7 +241,6 @@ $(function() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       //check if valid URL.
       if(data.code != 200) {
         //create a function that displays a character not found where the character info should be.
@@ -243,8 +257,17 @@ $(function() {
         getWikiInfo();
       }
       else {
-        //create a function that displays a character not found where the character info should be.
-        return;
+        //in the card header output no character found.
+        var characterTitleEl = $("<div>");
+        characterTitleEl.addClass("cardBody");
+
+        var cardHeaderEl = $("<h3>");
+        cardHeaderEl.addClass("card-title")
+        cardHeaderEl.text("No Character Found");
+
+        //append the new elements to the character card.
+        characterTitleEl.append(cardHeaderEl);
+        characterCard.append(characterTitleEl);
       }
     });
 
@@ -254,7 +277,6 @@ $(function() {
   function getFavText(event) {
     event.preventDefault();
     currentSearchResult = $(event.target).text();
-    console.log(currentSearchResult);
 
     //get the index location of the selected name.
     var indexOfCurrentName = favoriteNames.indexOf(currentSearchResult);
@@ -285,7 +307,17 @@ $(function() {
         getWikiInfo();
       }
       else {
-        //create a function that displays a character not found where the character info should be.
+        //in the card header output no character found.
+        var characterTitleEl = $("<div>");
+        characterTitleEl.addClass("cardBody");
+
+        var cardHeaderEl = $("<h3>");
+        cardHeaderEl.addClass("card-title")
+        cardHeaderEl.text("No Character Found");
+
+        //append the new elements to the character card.
+        characterTitleEl.append(cardHeaderEl);
+        characterCard.append(characterTitleEl);
         return;
       }
     });
@@ -298,7 +330,6 @@ $(function() {
       //get from local storage.
       favoriteNames = localStorageFavorites.marvel;
       favoriteWikiUrls = localStorageFavorites.wikiUrl;
-      console.log(favoriteNames + "; " + favoriteWikiUrls);
 
       //call a function to generate the favorite accordion list.
       createFavoriteList();
