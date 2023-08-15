@@ -7,14 +7,16 @@ $(function() {
   var marvelRequestUrl;
 
   
-  var favorites = [];
+  var favoriteNames = [];
+  var favoriteWikiUrls = [];
+  var currentSearchResult;
   var requestUrl;
 
    //store specific elements from the html to the variables.
   var searchForm = $("#searchForm");
   var searchTerm = document.getElementById("searchTerm");
   var searchButton = document.getElementById("searchCharacter");
-  var faveButton = document.getElementById("starBtn");
+  var faveButton = $("#starBtn");
   var accordionPane = $("#accordionWikiResults");
 
   
@@ -31,15 +33,16 @@ $(function() {
   //replace Hulk with input value from the search box.  Place this in a function later.
   var marvelRequestUrl;
 
-  function searchChar () {
-    searchButton.addEventListener("click", function (event) {
-        event.preventDefault();
-            var searchT = {
-                marvel: searchTerm.value.trim()
-            }
-            localStorage.setItem("userentry", JSON.stringify(searchT));
-            console.log(favorites.marvel);
-    })
+  function searchChar (event) {
+    console.log("test");
+    favoriteNames.push("currentSearchResult");
+    favoriteWikiUrls.push("test")
+    event.preventDefault();
+    var searchT = {
+        marvel: favoriteNames,
+        wikiUrl: favoriteWikiUrls
+    }
+    localStorage.setItem("userentry", JSON.stringify(searchT));
   }
 
   //create function to output wiki results to page.
@@ -127,13 +130,13 @@ $(function() {
   function getSearchText(event) {
     event.preventDefault();
     //get the value of the search bar and check if it is null.
-    var searchResult = searchTerm.value.trim();
-    if (!searchResult) {
+    currentSearchResult = searchTerm.value.trim();
+    if (!currentSearchResult) {
       return;
     }
     //create the url that the marvel api and wikipedia api will use.
-    marvelRequestUrl = url + searchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
-    requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + searchResult + "&origin=*&format=json&prop=info&inprop=url";
+    marvelRequestUrl = url + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
+    requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + currentSearchResult + "&origin=*&format=json&prop=info&inprop=url";
 
     //fetch the marvel api.
     fetch(marvelRequestUrl)
@@ -178,7 +181,9 @@ $(function() {
   function initialize() {
     var localStorageFavorites = JSON.parse(localStorage.getItem("userentry"));
     if (localStorageFavorites) {
-      favorites = localStorageFavorites;
+      favoriteNames = localStorageFavorites.marvel;
+      favoriteWikiUrls = localStorageFavorites.wikiUrl;
+      console.log(favoriteNames + ", " + favoriteWikiUrls)
     }
   }
 
@@ -186,5 +191,5 @@ $(function() {
 
   searchForm.on("submit", getSearchText);
   //create an on click event for the favorite button.
-  faveButton.addEventListener("click", searchChar)
+  faveButton.on("click", searchChar);
 });

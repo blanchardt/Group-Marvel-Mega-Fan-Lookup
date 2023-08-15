@@ -36,16 +36,23 @@
         <!-- Favorites -->
     <section style="width:20%; float: left; padding-left: 75px; padding-top: 10px;"> 
       <blaze-accordion>
-          <blaze-accordion-pane id="accordionFavorites" open header="My Favorites ⭐️">
+        <blaze-accordion-pane id="accordionFavorites" open header="My Favorites ⭐️">
+          <a href="#">This is an expanded accordion</a>
+          <blaze-accordion>
             This is an expanded accordion
-      </blaze-accordion-pane>
+          </blaze-accordion>
+          <blaze-accordion>
+            This is an expanded accordion
+          </blaze-accordion>
+        </blaze-accordion-pane>
+      </blaze-accordion>
     </section>
 
     <!-- Return searched content from Marvel API -->
     <div  class="card" style="float: right; width: 70rem;">
         <img src="..." class="card-img-top" alt="...">
     <div class="cardBody">
-          <h3 class="card-title">Character name  <button class="btn; fa-regular fa-star" id="starBtn"></button></h3> 
+          <h3 class="card-title">Character name  <button class="btn fa-regular fa-star" id="starBtn"></button></h3> 
           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     </div>
     </div>
@@ -55,7 +62,8 @@
     <blaze-accordion id="accordionWikiResults"> 
         <blaze-accordion-pane  open header="Click me">
           This is an expanded accordion
-    </blaze-accordion-pane>
+      </blaze-accordion-pane>
+    </blaze-accordion>
    
   </section>
    
