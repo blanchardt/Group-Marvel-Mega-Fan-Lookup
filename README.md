@@ -1,4 +1,5 @@
 # Marvel Mega Fan Look-up
+Using APIs create a site to look up Marvel characters and their wikipedia sites.  
 
 ## Description
 We have an appreciation for Marvel characters but understand that the Marvel website alone may not include all of the information that an external unbiased website like Wikipedia may have.  This application combines the best of both worlds for us, by engaging the Marvel and Wikimedia APIs at the same time and providing the option to visit both from the same location.  Never again will we search multiple sites at once for character information.  This allows the user more time for the truly important research.  Our group learned how to implement an alternative CSS framework, use different methods to work with the fetch results from third party servers, and how to collaborate while coding using Github features and branches for our code, with main protected.  
@@ -9,8 +10,12 @@ Visit addlinkhere.  No installation steps required.
 
 Identify and select the search input field.  Think of your favorite Marvel character (villain or hero) and enter their name in the search field.  If your character yields any results, a card will appear that includes their photo from Marvel.com and the link to that character's Wikipedia article.  By selecting the link you can visit the Wikipedia article.
 
-![Screenshot of initial page load - Marvel Mega Fan Look-up](assets/images/screenshot.png)
-![Screenshot of page after example search of scarlet witch - Marvel Mega Fan Look-up](assets/images/screenshot.png)
+Initial Page:  
+![Initial page with a hero banner and a search box.](image-2.png)  
+
+Page with result:  
+![page with the result of the hulk on the screen, with hulk, thor, and iron man saved as favorites.](image.png)  
+![page with the result of the hulk on the screen, with his description and a link to a wiki for the hulk.](image-1.png)  
 
 ## Credits
 
@@ -22,12 +27,15 @@ Third Party APIs Used:
 MediaWiki - https://www.mediawiki.org/wiki/API:Properties#
 Marvel - https://developer.marvel.com
 
-Nicole Thomas - https://github.com/nthomas88 
-Nicole provided assistance with teaching the material as well as assistance on a specific hash concern for the Marvel API and an api link concern for the MediaWiki API.
+Nicole Thomas - https://github.com/nthomas88  
+Nicole provided assistance with teaching the material as well as assistance on a specific hash concern for the Marvel API and an api link concern for the MediaWiki API.  
 
-https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to use the MD5 function, referenced on line 27-31.
+link to GitHub repo - https://github.com/blanchardt/Group-Marvel-Mega-Fan-Lookup  
+link to live site - https://blanchardt.github.io/Group-Marvel-Mega-Fan-Lookup/  
 
-https://bobbyhadz.com/blog/javascript-remove-first-n-characters-from-string to figure out how to remove the first 4 characters of a string, referenced on line 40-44.
+https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to use the MD5 function, referenced on line 24-36 in script.js file.  
+
+https://bobbyhadz.com/blog/javascript-remove-first-n-characters-from-string to figure out how to remove the first 4 characters of a string, referenced on line 153-156 in script.js file.  
 
 
 ## License
