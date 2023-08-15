@@ -11,6 +11,7 @@ $(function() {
   var faveButton = $("#starBtn");
   var accordionPane = $("#accordionWikiResults");
   var accordionFavorites = $("#accordionFavorites");
+  var characterCard = $("#characterCard");
 
   
   //declare the url, public and private key in variables.
@@ -140,6 +141,8 @@ $(function() {
   }
 
   function searchResultMarvelUpdate (characterInfo) {
+    characterCard.empty();
+
     //get the image url.
     var imageUrl = createImage(characterInfo);
 
@@ -147,18 +150,41 @@ $(function() {
     var name = characterInfo.name;
     var description = characterInfo.description;
 
-    //create a function to check if this hero has been saved to local storage.
+    //check if current character is saved as a favorite and create a string of classes based off the result.
+    var indexOfCurrentName = favoriteNames.indexOf(name);
+    var favoriteClass = "btn fa-regular fa-star";
+
+    if(indexOfCurrentName !== -1) {
+      favoriteClass += " active";
+    }
 
     //update the index.html file using jquerry to add the picture, description, and image appropriatly.
-    var topImage = $(".card-img-top");
-
+    var topImage = $("<img>");
     topImage.attr("src", imageUrl);
+    topImage.addClass("card-img-top");
+    topImage.attr("alt", "image of " + name);
 
-    var characterTitleEl = $(".card-title");
-    characterTitleEl.text(name);
+    var characterTitleEl = $("<div>");
+    characterTitleEl.addClass("cardBody");
 
-    var characterCardText = $(".card-text");
+    var cardHeaderEl = $("<h3>");
+    cardHeaderEl.addClass("card-title")
+    cardHeaderEl.text(name);
+
+    var favoriteBtnEl = $("<button>");
+    favoriteBtnEl.addClass(favoriteClass);
+    favoriteBtnEl.attr("id", "starBtn");
+
+    var characterCardText = $("<p>");
+    characterCardText.addClass("card-text");
     characterCardText.text(description);
+
+    //append the new elements to the character card.
+    cardHeaderEl.append(favoriteBtnEl);
+    characterTitleEl.append(cardHeaderEl);
+    characterTitleEl.append(characterCardText);
+    characterCard.append(topImage);
+    characterCard.append(characterTitleEl);
   }
 
 
@@ -188,7 +214,6 @@ $(function() {
         return;
       }
       var characterFound = determineIfCharacter(data);
-      console.log(characterFound);
       if (characterFound) {
         //get the first value in the array.
         var characterResult = data.data.results[0];
