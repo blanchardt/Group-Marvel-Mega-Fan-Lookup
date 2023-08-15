@@ -1,10 +1,4 @@
 $(function() {
-  //declare the url, public and private key in variables.
-  var url = 'https://gateway.marvel.com:443/v1/public/characters?name=';
-  var publicKey = "e2e4e185f80f3a71cdcff67fb6afc597";
-  var privateKey = "504281b22311ba46a13b1314cb218178efc48b84";
-  //get the current unix code for the time stamp.
-  var ts = dayjs().unix();
   
 
   //Went to https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to
@@ -12,13 +6,30 @@ $(function() {
   var hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
   var marvelRequestUrl;
 
-  var searchForm = $("#searchForm");
-
-  var searchTerm = document.getElementById("searchTerm");
+  
   var favorites = [];
-  var requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + favorites.marvel + "&origin=*&format=json&prop=info&inprop=url";
+  var requestUrl;
+
+   //store specific elements from the html to the variables.
+  var searchForm = $("#searchForm");
+  var searchTerm = document.getElementById("searchTerm");
   var searchButton = document.getElementById("searchCharacter");
   var faveButton = document.getElementById("starBtn");
+  var accordionPane = $("#accordionWikiResults");
+
+  
+  //declare the url, public and private key in variables.
+  var url = 'https://gateway.marvel.com:443/v1/public/characters?name=';
+  var publicKey = "e2e4e185f80f3a71cdcff67fb6afc597";
+  var privateKey = "504281b22311ba46a13b1314cb218178efc48b84";
+  //get the current unix code for the time stamp.
+  var ts = dayjs().unix();
+
+  //Went to https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to
+  //use the MD5 function.  Also credited in the readme file.
+  var hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
+  //replace Hulk with input value from the search box.  Place this in a function later.
+  var marvelRequestUrl;
 
   function searchChar () {
     searchButton.addEventListener("click", function (event) {
@@ -31,27 +42,39 @@ $(function() {
     })
   }
 
-  function getWikiInfo(characterName) {
-    
-  }
-
-  fetch(requestUrl)
-  .then(function (response) {
-      return response.json();
-  })
+  //create function to output wiki results to page.
+  function getWikiInfo() {
+    fetch(requestUrl)
+    .then(function (response) {
+        return response.json();
+    })
     .then(function (data) {
-      console.log(data);
+      
       var wikiResult = Object.values(data.query.pages)[0];
+      //Error checking, change output if no results found
       if (wikiResult) {
-          var wikiLink = wikiResult.fullurl;
-          //Error checking, change output if no results found
-          console.log(wikiLink);
-          
+        //get the full wikipedia url.
+        var wikiLink = wikiResult.fullurl;
+        
+        //create the accordion to store the url.
+        var accordionPaneCreation = $("<blaze-accordion-pane open>");
+        accordionPaneCreation.attr('header', "Wikipedia Links:");
+        accordionPaneCreation.text(wikiLink);
+
+        //append the accordion.
+        accordionPane.append(accordionPaneCreation);
+        
       } else {
           //text content
-      }
-      
+      } 
+    })
+    .then(function (response) {
+        return response.json();
+    })
+      .then(function (data) {
+        console.log(data);
     });
+  }
 
 
 
@@ -108,9 +131,10 @@ $(function() {
     if (!searchResult) {
       return;
     }
-    //create the url that the marvel api will use.
+    //create the url that the marvel api and wikipedia api will use.
     marvelRequestUrl = url + searchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
-    
+    requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + searchResult + "&origin=*&format=json&prop=info&inprop=url";
+
     //fetch the marvel api.
     fetch(marvelRequestUrl)
       .then(function (response) {
@@ -136,8 +160,8 @@ $(function() {
         return;
       }
 
-      //create a function that deals with wikipedia api.
-      getWikiInfo(searchResult);
+      //call the function that deals with wikipedia api.
+      getWikiInfo();
 
       var searchT = {
         marvel: searchTerm.value.trim()
