@@ -3,39 +3,35 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover; 
-    padding: 80px;
+    padding: 5%;
     color: white;
 }
 
 #pageTitle {
     font-weight: bolder;
     font-family: Verdana, Tahoma, sans-serif;
-    font-size: 200%;
+    font-size: 225%;
     display: flex;
     justify-content: left;
     background-color: rgb(199, 0, 0);
-    padding: 10px;
     width: fit-content;
-    margin: 0px;
 }
 
 #subHeader {
     font-weight: bolder;
     font-family: Verdana, Tahoma, sans-serif;
-    font-size: 75%;
+    font-size: 125%;
     display: flex;
     justify-content: left;
     background-color: rgb(199, 0, 0);
-    padding: 10px;
     width: fit-content;
-    margin: 0px;
 }
 
 .searchField {
     display: flex;
-    padding-top: 50px;
-    padding-bottom:  20px;
-    padding-left: 80px;
+    padding-top: 5%;
+    padding-bottom: 1%;
+    padding-left: 4%;
     font-family: Verdana, Tahoma, sans-serif;
     width: 20%;
 }
@@ -47,8 +43,7 @@
 
  button {
     width: 15%;
-    border-radius: 10px;
-    height: 40px;
+    border-radius: 20%;
     font-family: Verdana, Tahoma, sans-serif;
     box-shadow: 2px 2px #888888;
  }
@@ -57,11 +52,9 @@
     background-color: rgba(255, 230, 0, 0.859);
  }
 
- #clearHistory{
-    font-family: Verdana, Tahoma, sans-serif;
-    margin-left: 80px;
-    text-align: center;
- }
+ #starBtn:active {
+    background-color: rgba(255, 230, 0, 0.859);
+}
 
  button:hover {
     background-color: rgba(134, 132, 132, 0.552);
@@ -81,5 +74,51 @@ section{
 
 #starBtn {
     width: 4%;
+    height: 8%;
     font-size: larger;
+    border-radius: 60%;
 }
+
+
+
+  /* media adjustments */
+  @media screen and (max-width: 992px) {
+    .cardBody {
+        min-width: 100%;
+        max-width: 100%;
+    }
+  }
+  @media screen and (max-width: 992px) {
+    #accordion {
+        min-width: 100%;
+        max-width: 100%;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .cardBody {
+        min-width: 100%;
+        max-width: 100%;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #accordion {
+        min-width: 100%;
+        max-width: 100%;
+    }
+  }
+
+
+  @media screen and (max-width: 576px) {
+    .cardBody {
+        min-width: 100%;
+        max-width: 100%;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    #accordion {
+        min-width: 100%;
+        max-width: 100%;
+  } 
+ }
