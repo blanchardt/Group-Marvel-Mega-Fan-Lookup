@@ -9,7 +9,7 @@ $(function() {
   var searchTerm = document.getElementById("searchTerm");
   var searchButton = document.getElementById("searchCharacter");
   var faveButton = $("#starBtn");
-  var accordionPane = $("#accordionWikiResults");
+  var accordionWiki = $("#accordionWiki");
   var accordionFavorites = $("#accordionFavorites");
   var characterCard = $("#characterCard");
 
@@ -90,20 +90,36 @@ $(function() {
         return response.json();
     })
     .then(function (data) {
+      //remove all of the html for he wiki section.
+      accordionWiki.empty();
       
       var wikiResult = Object.values(data.query.pages)[0];
       //Error checking, change output if no results found
       if (wikiResult) {
         //get the full wikipedia url.
         var wikiLink = wikiResult.fullurl;
-        
-        //create the accordion to store the url.
-        var accordionPaneCreation = $("<blaze-accordion-pane open>");
-        accordionPaneCreation.attr('header', "Wikipedia Links:");
-        accordionPaneCreation.text(wikiLink);
 
-        //append the accordion.
-        accordionPane.append(accordionPaneCreation);
+
+        //create the html elements for the wiki accordion.
+        var initialBlazeEl = $("<blaze-accordion>");
+
+        var accordionWikiPane = $("<blaze-accordion-pane open>");
+        accordionWikiPane.attr("header", "Wikipedia Links");
+
+        var accordionBlazeEl = $("<blaze-accordion>");
+
+        var wikiLinkList = $("<a>");
+        wikiLinkList.attr("href", wikiLink);
+        wikiLinkList.text(wikiLink);
+
+        //append the elements appropriatly.
+        accordionBlazeEl.append(wikiLinkList);
+        accordionWikiPane.append(accordionBlazeEl);
+
+        //append the initial html elements to the html.
+        initialBlazeEl.append(accordionWikiPane);
+
+        accordionWiki.append(initialBlazeEl);
         
       } else {
           //text content
