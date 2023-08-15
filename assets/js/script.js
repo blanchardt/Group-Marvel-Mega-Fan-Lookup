@@ -7,7 +7,6 @@ $(function() {
    //store specific elements from the html to the variables.
   var searchForm = $("#searchForm");
   var searchTerm = document.getElementById("searchTerm");
-  var searchButton = document.getElementById("searchCharacter");
   var faveButton;
   var accordionWiki = $("#accordionWiki");
   var accordionFavorites = $("#accordionFavorites");
@@ -15,7 +14,7 @@ $(function() {
 
   
   //declare the url, public and private key in variables.
-  var url = 'https://gateway.marvel.com:443/v1/public/characters?name=';
+  var url = 'https://gateway.marvel.com:443/v1/public/characters?';
   var publicKey = "e2e4e185f80f3a71cdcff67fb6afc597";
   var privateKey = "504281b22311ba46a13b1314cb218178efc48b84";
   //get the current unix code for the time stamp.
@@ -232,8 +231,17 @@ $(function() {
       return;
     }
     //create the url that the marvel api and wikipedia api will use.
-    marvelRequestUrl = url + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
     requestUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + currentSearchResult + "&origin=*&format=json&prop=info&inprop=url";
+
+    //check if spider man was entered then create the appropriate url.
+    var spiderMan = false;
+    if (currentSearchResult.toLowerCase() == "spider man" || currentSearchResult.toLowerCase() == "spider-man") {
+      marvelRequestUrl = url + "nameStartsWith=" + "spider-man" + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
+      spiderMan = true;
+    }
+    else {
+      marvelRequestUrl = url + "name=" + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
+    }
 
     //fetch the marvel api.
     fetch(marvelRequestUrl)
@@ -241,6 +249,7 @@ $(function() {
       return response.json();
     })
     .then(function (data) {
+      console.log(data);
       //check if valid URL.
       if(data.code != 200) {
         //create a function that displays a character not found where the character info should be.
@@ -248,8 +257,13 @@ $(function() {
       }
       var characterFound = determineIfCharacter(data);
       if (characterFound) {
-        //get the first value in the array.
-        var characterResult = data.data.results[0];
+        //get the first value in the array, unless spider man.
+        if(spiderMan) {
+          var characterResult = data.data.results[10];
+        }
+        else {
+          var characterResult = data.data.results[0];
+        }
         //call function to deal with the marvel api.
         searchResultMarvelUpdate(characterResult);
 
@@ -257,6 +271,10 @@ $(function() {
         getWikiInfo();
       }
       else {
+        //remove already existing card and wiki sections.
+        characterCard.empty();
+        accordionWiki.empty();
+
         //in the card header output no character found.
         var characterTitleEl = $("<div>");
         characterTitleEl.addClass("cardBody");
