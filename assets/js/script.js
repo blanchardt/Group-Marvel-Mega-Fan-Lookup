@@ -56,7 +56,7 @@ $(function() {
     accordionFavorites.append(initialBlazeEl);
   }
 
-  function searchChar (event) {
+  function favoriteClick (event) {
     event.preventDefault();
 
     //check if active.
@@ -81,6 +81,8 @@ $(function() {
         wikiUrl: favoriteWikiUrls
     }
     localStorage.setItem("userentry", JSON.stringify(searchT));
+
+    createFavoriteList();
   }
 
   //create function to output wiki results to page.
@@ -159,6 +161,9 @@ $(function() {
     //get character name and description and store them in a variable.
     currentSearchResult = characterInfo.name;
     var description = characterInfo.description;
+    if(!description) {
+      description = "No description available."
+    }
 
     //check if current character is saved as a favorite and create a string of classes based off the result.
     var indexOfCurrentName = favoriteNames.indexOf(currentSearchResult);
@@ -179,7 +184,7 @@ $(function() {
 
     var cardHeaderEl = $("<h3>");
     cardHeaderEl.addClass("card-title")
-    cardHeaderEl.text(currentSearchResult);
+    cardHeaderEl.text(currentSearchResult + "  ");
 
     var favoriteBtnEl = $("<button>");
     favoriteBtnEl.addClass(favoriteClass);
@@ -198,7 +203,7 @@ $(function() {
 
     //reasign faveButton to the new starBtn and provide an onclick event
     faveButton = $("#starBtn");
-    faveButton.on("click", searchChar);
+    faveButton.on("click", favoriteClick);
   }
 
 
@@ -233,21 +238,57 @@ $(function() {
         var characterResult = data.data.results[0];
         //call function to deal with the marvel api.
         searchResultMarvelUpdate(characterResult);
+
+        //call the function that deals with wikipedia api.
+        getWikiInfo();
       }
       else {
         //create a function that displays a character not found where the character info should be.
         return;
       }
-
-      //call the function that deals with wikipedia api.
-      getWikiInfo();
-
-      var searchT = {
-        marvel: searchTerm.value.trim()
-      }
     });
 
     searchTerm.value = "";
+  }
+
+  function getFavText(event) {
+    event.preventDefault();
+    currentSearchResult = $(event.target).text();
+    console.log(currentSearchResult);
+
+    //get the index location of the selected name.
+    var indexOfCurrentName = favoriteNames.indexOf(currentSearchResult);
+
+    //create the url that the marvel api and wikipedia api will use.
+    marvelRequestUrl = url + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
+    requestUrl = favoriteWikiUrls[indexOfCurrentName];
+
+    //fetch the marvel api.
+    fetch(marvelRequestUrl)
+      .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      //check if valid URL.
+      if(data.code != 200) {
+        //create a function that displays a character not found where the character info should be.
+        return;
+      }
+      var characterFound = determineIfCharacter(data);
+      if (characterFound) {
+        //get the first value in the array.
+        var characterResult = data.data.results[0];
+        //call function to deal with the marvel api.
+        searchResultMarvelUpdate(characterResult);
+
+        //call the function that deals with wikipedia api.
+        getWikiInfo();
+      }
+      else {
+        //create a function that displays a character not found where the character info should be.
+        return;
+      }
+    });
   }
 
   //on load of the page, grab the local storage info, create the favorites accordion based off results.
@@ -268,6 +309,7 @@ $(function() {
 
   //submit and click events for the form, favorite button, and favorite accordion
   searchForm.on("submit", getSearchText);
-  searchForm.on("click", ".fa-search", getSearchText);
+  searchForm.on("click", "button", getSearchText);
   //create a on click event for the accordion list.
+  accordionFavorites.on("click", "a", getFavText);
 });
