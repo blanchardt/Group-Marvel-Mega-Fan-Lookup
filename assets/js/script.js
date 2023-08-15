@@ -8,7 +8,7 @@ $(function() {
   var searchForm = $("#searchForm");
   var searchTerm = document.getElementById("searchTerm");
   var searchButton = document.getElementById("searchCharacter");
-  var faveButton = $("#starBtn");
+  var faveButton;
   var accordionWiki = $("#accordionWiki");
   var accordionFavorites = $("#accordionFavorites");
   var characterCard = $("#characterCard");
@@ -64,15 +64,15 @@ $(function() {
     {
       //remove the active class and remove the current search result from the array.
       faveButton.removeClass("active");
-      var indexOfCurrentName = favoriteNames.indexOf("currentSearchResult");
+      var indexOfCurrentName = favoriteNames.indexOf(currentSearchResult);
       favoriteNames.splice(indexOfCurrentName, 1);
       favoriteWikiUrls.splice(indexOfCurrentName, 1);
     }
     else {
       console.log("not active");
       faveButton.addClass("active");
-      favoriteNames.push("currentSearchResult");
-      favoriteWikiUrls.push("requestUrl");
+      favoriteNames.push(currentSearchResult);
+      favoriteWikiUrls.push(requestUrl);
     }
 
     //update the local storage.
@@ -124,12 +124,6 @@ $(function() {
       } else {
           //text content
       } 
-    })
-    .then(function (response) {
-        return response.json();
-    })
-      .then(function (data) {
-        console.log(data);
     });
   }
 
@@ -163,11 +157,11 @@ $(function() {
     var imageUrl = createImage(characterInfo);
 
     //get character name and description and store them in a variable.
-    var name = characterInfo.name;
+    currentSearchResult = characterInfo.name;
     var description = characterInfo.description;
 
     //check if current character is saved as a favorite and create a string of classes based off the result.
-    var indexOfCurrentName = favoriteNames.indexOf(name);
+    var indexOfCurrentName = favoriteNames.indexOf(currentSearchResult);
     var favoriteClass = "btn fa-regular fa-star";
 
     if(indexOfCurrentName !== -1) {
@@ -178,14 +172,14 @@ $(function() {
     var topImage = $("<img>");
     topImage.attr("src", imageUrl);
     topImage.addClass("card-img-top");
-    topImage.attr("alt", "image of " + name);
+    topImage.attr("alt", "image of " + currentSearchResult);
 
     var characterTitleEl = $("<div>");
     characterTitleEl.addClass("cardBody");
 
     var cardHeaderEl = $("<h3>");
     cardHeaderEl.addClass("card-title")
-    cardHeaderEl.text(name);
+    cardHeaderEl.text(currentSearchResult);
 
     var favoriteBtnEl = $("<button>");
     favoriteBtnEl.addClass(favoriteClass);
@@ -201,6 +195,10 @@ $(function() {
     characterTitleEl.append(characterCardText);
     characterCard.append(topImage);
     characterCard.append(characterTitleEl);
+
+    //reasign faveButton to the new starBtn and provide an onclick event
+    faveButton = $("#starBtn");
+    faveButton.on("click", searchChar);
   }
 
 
@@ -247,10 +245,6 @@ $(function() {
       var searchT = {
         marvel: searchTerm.value.trim()
       }
-
-      favorites.push(searchT);
-      localStorage.setItem("userentry", JSON.stringify(searchT));
-      console.log(favorites.marvel);
     });
 
     searchTerm.value = "";
@@ -263,7 +257,7 @@ $(function() {
       //get from local storage.
       favoriteNames = localStorageFavorites.marvel;
       favoriteWikiUrls = localStorageFavorites.wikiUrl;
-      console.log(favoriteNames + ", " + favoriteWikiUrls);
+      console.log(favoriteNames + "; " + favoriteWikiUrls);
 
       //call a function to generate the favorite accordion list.
       createFavoriteList();
@@ -274,6 +268,6 @@ $(function() {
 
   //submit and click events for the form, favorite button, and favorite accordion
   searchForm.on("submit", getSearchText);
-  faveButton.on("click", searchChar);
+  searchForm.on("click", ".fa-search", getSearchText);
   //create a on click event for the accordion list.
 });
