@@ -1,12 +1,4 @@
 $(function() {
-  
-
-  //Went to https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to
-  //use the MD5 function.  Also credited in the readme file.
-  var hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
-  var marvelRequestUrl;
-
-  
   var favoriteNames = [];
   var favoriteWikiUrls = [];
   var currentSearchResult;
@@ -34,10 +26,25 @@ $(function() {
   var marvelRequestUrl;
 
   function searchChar (event) {
-    console.log("test");
-    favoriteNames.push("currentSearchResult");
-    favoriteWikiUrls.push("test")
     event.preventDefault();
+
+    //check if active.
+    if(faveButton.hasClass("active"))
+    {
+      //remove the active class and remove the current search result from the array.
+      faveButton.removeClass("active");
+      var indexOfCurrentName = favoriteNames.indexOf("currentSearchResult");
+      favoriteNames.splice(indexOfCurrentName, 1);
+      favoriteWikiUrls.splice(indexOfCurrentName, 1);
+    }
+    else {
+      console.log("not active");
+      faveButton.addClass("active");
+      favoriteNames.push("currentSearchResult");
+      favoriteWikiUrls.push("requestUrl");
+    }
+
+    //update the local storage.
     var searchT = {
         marvel: favoriteNames,
         wikiUrl: favoriteWikiUrls

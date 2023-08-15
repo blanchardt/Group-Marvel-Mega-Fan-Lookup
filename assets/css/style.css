@@ -52,7 +52,7 @@
     background-color: rgba(255, 230, 0, 0.859);
  }
 
- #starBtn:active {
+ .active {
     background-color: rgba(255, 230, 0, 0.859);
 }
 
