@@ -10,6 +10,7 @@ $(function() {
   var searchButton = document.getElementById("searchCharacter");
   var faveButton = $("#starBtn");
   var accordionPane = $("#accordionWikiResults");
+  var accordionFavorites = $("#accordionFavorites");
 
   
   //declare the url, public and private key in variables.
@@ -24,6 +25,35 @@ $(function() {
   var hash = CryptoJS.MD5(ts + privateKey + publicKey).toString();
   //replace Hulk with input value from the search box.  Place this in a function later.
   var marvelRequestUrl;
+
+  function createFavoriteList() {
+    //reset the html for the accordion.
+    accordionFavorites.empty();
+
+    var initialBlazeEl = $("<blaze-accordion>");
+
+    var accordionFavoritePane = $("<blaze-accordion-pane open>");
+    accordionFavoritePane.attr("header", "My Favorites ⭐️");
+    
+    //populate the accordion list.
+    for (var i = 0; i < favoriteNames.length; i++) {
+      //create the html elements and attributes.
+      var accordionBlazeEl = $("<blaze-accordion>");
+
+      var favoriteLink = $("<a>");
+      favoriteLink.attr("href", "#");
+      favoriteLink.text(favoriteNames[i]);
+
+      //append the elements appropriatly.
+      accordionBlazeEl.append(favoriteLink);
+      accordionFavoritePane.append(accordionBlazeEl);
+    }
+
+    //append the initial html elements to the html.
+    initialBlazeEl.append(accordionFavoritePane);
+
+    accordionFavorites.append(initialBlazeEl);
+  }
 
   function searchChar (event) {
     event.preventDefault();
@@ -185,18 +215,24 @@ $(function() {
     searchTerm.value = "";
   }
 
+  //on load of the page, grab the local storage info, create the favorites accordion based off results.
   function initialize() {
     var localStorageFavorites = JSON.parse(localStorage.getItem("userentry"));
     if (localStorageFavorites) {
+      //get from local storage.
       favoriteNames = localStorageFavorites.marvel;
       favoriteWikiUrls = localStorageFavorites.wikiUrl;
-      console.log(favoriteNames + ", " + favoriteWikiUrls)
+      console.log(favoriteNames + ", " + favoriteWikiUrls);
+
+      //call a function to generate the favorite accordion list.
+      createFavoriteList();
     }
   }
 
   initialize();
 
+  //submit and click events for the form, favorite button, and favorite accordion
   searchForm.on("submit", getSearchText);
-  //create an on click event for the favorite button.
   faveButton.on("click", searchChar);
+  //create a on click event for the accordion list.
 });
