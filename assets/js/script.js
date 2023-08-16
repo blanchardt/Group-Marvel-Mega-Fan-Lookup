@@ -249,7 +249,6 @@ $(function() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       //check if valid URL.
       if(data.code != 200) {
         //create a function that displays a character not found where the character info should be.
@@ -300,7 +299,7 @@ $(function() {
     var indexOfCurrentName = favoriteNames.indexOf(currentSearchResult);
 
     //create the url that the marvel api and wikipedia api will use.
-    marvelRequestUrl = url + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
+    marvelRequestUrl = url + "name=" + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
     requestUrl = favoriteWikiUrls[indexOfCurrentName];
 
     //fetch the marvel api.
