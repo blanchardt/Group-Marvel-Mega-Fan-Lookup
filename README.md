@@ -11,11 +11,11 @@ Visit addlinkhere.  No installation steps required.
 Identify and select the search input field.  Think of your favorite Marvel character (villain or hero) and enter their name in the search field.  If your character yields any results, a card will appear that includes their photo from Marvel.com and the link to that character's Wikipedia article.  By selecting the link you can visit the Wikipedia article.
 
 Initial Page:  
-![Initial page with a hero banner and a search box.](image-2.png)  
+![Initial page with a hero banner and a search box.](./assets/images/initial-page.png)  
 
 Page with result:  
-![page with the result of the hulk on the screen, with hulk, thor, and iron man saved as favorites.](image.png)  
-![page with the result of the hulk on the screen, with his description and a link to a wiki for the hulk.](image-1.png)  
+![page with the result of the hulk on the screen, with hulk, thor, and iron man saved as favorites.](./assets/images/hulk-1.png)  
+![page with the result of the hulk on the screen, with his description and a link to a wiki for the hulk.](./assets/images/hulk-2.png)  
 
 ## Credits
 
