@@ -33,9 +33,15 @@ Nicole provided assistance with teaching the material as well as assistance on a
 link to GitHub repo - https://github.com/blanchardt/Group-Marvel-Mega-Fan-Lookup  
 link to live site - https://blanchardt.github.io/Group-Marvel-Mega-Fan-Lookup/  
 
-https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to use the MD5 function, referenced on line 24-36 in script.js file.  
+https://stackoverflow.com/questions/1655769/fastest-md5-implementation-in-javascript to figure out how to use the MD5 function, referenced on line 24-36 in script.js file.   
+powtac, Matt Baker, theCodeMachine, Tyler Liu, dkellner, Shital Shah, Szabolcs Dombi, Zibri, ez2, Dr.YSG, gtournie,    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;brillout, R. Hill, emn178, eustatos, av01d, Francis, Bobík, user42507, … Mario Steinitz. (2009, October 31).   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fastest MD5 implementation in JavaScript. Stack Overflow. https://stackoverflow.com/questions/1655769/fastest-md5-    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;implementation-in-javascript  
 
-https://bobbyhadz.com/blog/javascript-remove-first-n-characters-from-string to figure out how to remove the first 4 characters of a string, referenced on line 153-156 in script.js file.  
+https://bobbyhadz.com/blog/javascript-remove-first-n-characters-from-string to figure out how to remove the first 4 characters of a string, referenced on line 153-156 in script.js file.    
+Hadzhiev, B. (2023, January 5). Remove the first N characters from a string in JavaScript. bobbyhadz.    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bobbyhadz.com/blog/javascript-remove-first-n-characters-from-string   
 
 
 ## License
