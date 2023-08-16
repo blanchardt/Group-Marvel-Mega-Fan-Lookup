@@ -299,7 +299,7 @@ $(function() {
     var indexOfCurrentName = favoriteNames.indexOf(currentSearchResult);
 
     //create the url that the marvel api and wikipedia api will use.
-    marvelRequestUrl = url + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
+    marvelRequestUrl = url + "name=" + currentSearchResult + "&ts=" + ts + "&apikey=" + publicKey + "&hash=" + hash;
     requestUrl = favoriteWikiUrls[indexOfCurrentName];
 
     //fetch the marvel api.
