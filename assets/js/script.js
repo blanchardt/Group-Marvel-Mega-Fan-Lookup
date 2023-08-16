@@ -249,7 +249,6 @@ $(function() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       //check if valid URL.
       if(data.code != 200) {
         //create a function that displays a character not found where the character info should be.
